@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="focus:outline-none w-60 py-2 mt-5 rounded transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-100" :class="[buttonColor, txtColor]">{{ buttonLabel }}</button>
+        <button class="focus:outline-none w-60 py-2 mt-5 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-100" :class="[buttonColor, txtColor]">{{ buttonLabel }}</button>
     </div>
 </template>
 <script>

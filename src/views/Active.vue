@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="active">
     <h1 class="text-4xl">TO DO LIST</h1>
     <p class="font-light">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
     <add-task/>
