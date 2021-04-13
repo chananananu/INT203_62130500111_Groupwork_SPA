@@ -69,12 +69,7 @@ export default {
   },
   data() {
     return {
-      showModal: false,
-      enteredName: "",
-      datail: null,
-      invalidNameInput: false,
       url: "http://localhost:5000/tasks",
-      tasks: [],
       openTab: 1,
     };
   },
@@ -91,10 +86,11 @@ export default {
       } catch (error) {
         console.log(`Could not get! ${error}`);
       }
-    },
+    }
   },
+
   async created() {
     this.tasks = await this.getTasks();
-  },
+  }
 };
 </script>
