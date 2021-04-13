@@ -6,7 +6,6 @@
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
     >
       <div class="relative w-auto my-6 mx-auto max-w-6xl">
-        <!--content-->
         <div
           class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
         >
@@ -19,7 +18,7 @@
               X
             </button>
           </div>
-          <!--header-->
+
           <div class="pt-7 px-64">
             <h3 class="text-3xl">Add Task</h3>
           </div>
@@ -64,11 +63,7 @@
               />
             </div>
             <div class="flex flex-col col-span-2">
-              <input
-                type="submit"
-                value="Add Task"
-                class="submit"
-              />
+              <input type="submit" value="Add Task" class="submit" />
             </div>
           </form>
         </div>
@@ -102,11 +97,12 @@ export default {
       console.log(`name value: ${this.enteredName}`);
       console.log(`invalid name: ${this.invalidNameInput}`);
 
-      
-      this.addNewTask({
-        name: this.enteredName,
-        detail: this.detail,
-      });
+      if (this.enteredName) {
+        this.addNewTask({
+          name: this.enteredName,
+          detail: this.detail,
+        });
+      }
     },
 
     validateName() {
@@ -132,19 +128,6 @@ export default {
         console.log(`Could not add ${error}`);
       }
     },
-
-    async getTasks() {
-      try {
-        const res = await fetch(this.url);
-        const data = await res.json();
-        return data;
-      } catch (error) {
-        console.log(`Could not get! ${error}`);
-      }
-    },
-  },
-  async created() {
-    this.tasks = await this.getTasks();
   },
 };
 </script>
