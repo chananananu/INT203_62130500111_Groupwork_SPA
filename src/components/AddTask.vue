@@ -1,8 +1,8 @@
 <template>
   <div>
-    <button @click="toggleModal()" class="btn">Add Task</button>
+    <!-- <button @click="toggleModal()" class="btn">Add Task</button> v-if="showModal"-->
     <div
-      v-if="showModal"
+      
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
     >
       <div class="relative w-auto my-4 mx-auto max-w-6xl">
@@ -13,7 +13,7 @@
             <button
               class="font-bold my-1 mx-3"
               type="button"
-              v-on:click="toggleModal()"
+              @click="closeModal"
             >
               X
             </button>
@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+    <!-- <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div> -->
   </div>
   <!-- </div> -->
 </template>
@@ -77,9 +77,10 @@
 <script>
 export default {
   name: "add-task",
+  emits: ["close","save-task"],
   data() {
     return {
-      showModal: false,
+      // showModal: false,
       enteredName: "",
       datail: null,
       invalidNameInput: false,
@@ -88,8 +89,11 @@ export default {
     };
   },
   methods: {
-    toggleModal: function() {
-      this.showModal = !this.showModal;
+    // toggleModal: function() {
+    //   this.showModal = !this.showModal;
+    // },
+    closeModal() {
+      this.$emit("close", true);
     },
 
     addTask() {
@@ -97,38 +101,58 @@ export default {
       console.log(`name value: ${this.enteredName}`);
       console.log(`invalid name: ${this.invalidNameInput}`);
 
-      if (this.enteredName) {
-        this.addNewTask({
-          name: this.enteredName,
-          detail: this.detail,
-        });
-      }
+      this.saveTask();
+      this.closeModal();
+
+      // if (this.enteredName) {
+      //   this.addNewTask({
+      //     name: this.enteredName,
+      //     detail: this.detail,
+      //   });
+      //}
     },
+
+    saveTask() {
+      let tasks = {
+        name: this.enteredName,
+        detail: this.detail,
+      };
+      this.$emit("save-task", tasks);
+    },
+      
+
 
     validateName() {
       this.invalidNameInput = this.enteredName === "" ? true : false;
       console.log(`name: ${this.invalidNameInput}`);
     },
 
-    async addNewTask(newTask) {
-      try {
-        const res = await fetch(this.url, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            name: newTask.name,
-            detail: newTask.detail,
-          }),
-        });
-        const data = await res.json();
-        this.tasks = [...this.tasks, data];
-      } catch (error) {
-        console.log(`Could not add ${error}`);
-      }
-      this.enteredName = ''
-      this.detail = null
+    // async addNewTask(newTask) {
+    //   try {
+    //     const res = await fetch(this.url, {
+    //       method: "POST",
+    //       headers: {
+    //         "content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         name: newTask.name,
+    //         detail: newTask.detail,
+    //       }),
+    //     });
+    //     const data = await res.json();
+    //     this.tasks = [...this.tasks, data];
+    //   } catch (error) {
+    //     console.log(`Could not add ${error}`);
+    //   }
+    //   this.enteredName = ''
+    //   this.detail = null
+    // },
+
+    showData(oldData) {
+      this.isEdit = true
+      this.editId = oldData.id
+      this.enteredName = oldData.name
+      this.detail = oldData.detail
     },
   },
 };
