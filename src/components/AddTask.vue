@@ -10,8 +10,12 @@
         <div
           class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
         >
-            <div class="flex justify-end">
-            <button class="text-red-500 font-bold my-1 mx-3" type="button" v-on:click="toggleModal()">
+          <div class="flex justify-end">
+            <button
+              class="text-red-500 font-bold my-1 mx-3"
+              type="button"
+              v-on:click="toggleModal()"
+            >
               X
             </button>
           </div>
@@ -59,14 +63,14 @@
                 class="w-full px-3 py-2 h-48  mb-3 bg-gray-100 rounded"
               />
             </div>
-
             <div class="flex flex-col col-span-2">
-              <input type="submit" value="Add Task" class="submit" />
+              <input
+                type="submit"
+                value="Add Task"
+                class="submit"
+              />
             </div>
           </form>
-
-
-
         </div>
       </div>
     </div>
@@ -84,7 +88,6 @@ export default {
       enteredName: "",
       datail: null,
       invalidNameInput: false,
-      invalidDetailInput: false,
       url: "http://localhost:5000/tasks",
       tasks: [],
     };
@@ -99,19 +102,13 @@ export default {
       console.log(`name value: ${this.enteredName}`);
       console.log(`invalid name: ${this.invalidNameInput}`);
 
-      if (this.enteredName !== "" && this.detail !== null) {
-        this.tasks.push({
-          name: this.enteredName,
-          detail: this.detail,
-        });
-      }
-      alert(`name: ${this.tasks[0].name} detail: ${this.tasks[0].detail}`);
-
+      
       this.addNewTask({
         name: this.enteredName,
         detail: this.detail,
       });
     },
+
     validateName() {
       this.invalidNameInput = this.enteredName === "" ? true : false;
       console.log(`name: ${this.invalidNameInput}`);
@@ -120,7 +117,6 @@ export default {
     async addNewTask(newTask) {
       try {
         const res = await fetch(this.url, {
-          //request อะไร
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -136,6 +132,19 @@ export default {
         console.log(`Could not add ${error}`);
       }
     },
+
+    async getTasks() {
+      try {
+        const res = await fetch(this.url);
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.log(`Could not get! ${error}`);
+      }
+    },
+  },
+  async created() {
+    this.tasks = await this.getTasks();
   },
 };
 </script>

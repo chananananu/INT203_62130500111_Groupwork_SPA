@@ -13,8 +13,20 @@
       <router-link to="/complete">
         <base-button buttonLabel="Complete Task" buttonColor="bg-bl"></base-button>
       </router-link>
-
     </div> 
+
+    <!-- <ul v-for="task in tasks" :key="task.id">
+            <li>
+              <span>{{ task.name }}</span><br>
+              <span> {{ task.detail }}</span>
+            </li>
+          </ul> -->
+    
+
+
+
+
+
   </div>
 </template>
 
