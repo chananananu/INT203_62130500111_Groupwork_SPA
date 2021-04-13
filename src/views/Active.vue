@@ -28,26 +28,49 @@
           v-on:click="toggleTabs(3)"
         ></base-button>
       </router-link>
-    </div>
-    <div
-      class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded"
-    >
-      <div class="px-4 py-5 flex-auto">
-        <div class="tab-content tab-space">
-          <div v-bind:class="{ hidden: openTab !== 2, block: openTab === 2 }">
-            <p>
-              Completely synergize resource taxing relationships via premier
-              niche markets. Professionally cultivate one-to-one customer
-              service with robust ideas.
-              <br />
-              <br />
-              Dynamically innovate resource-leveling customer service for state
-              of the art customer service.
-            </p>
+</div>
+      <div class="px-60 py-5 flex-auto ">
+        <div v-bind:class="{ hidden: openTab !== 2, block: openTab === 2 }">
+          <div class="space-y-3">
+
+            <div v-for="task in tasks" :key="task.id">       
+
+              <div class="w-full rounded-md px-4 py-3 border border-grs outline-none focus:outline-none">
+              <table class='w-full'>
+                <tr>
+                    <td class="">
+                        <div class="flex justify-start">
+                          <input type="checkbox" class="form-checkbox h-5 w-5 mt-1">
+                          <h3 class="ml-3 text-lg tracking-wide">
+                            {{ task.name }}
+                          </h3>
+                        </div>
+
+                        <div class="flex justify-start">
+                          <p class="ml-8 text-grs font-light">
+                            {{ task.detail }}
+                          </p>
+                        </div>
+                    </td>
+                    <td class="pt-2 text-right">
+                      <button class="px-2" >
+                        <span class="material-icons">
+                          edit
+                        </span>
+                      </button>
+                      <button class="px-2" >
+                        <span class="material-icons">
+                          delete
+                        </span>
+                      </button>
+                    </td>
+                </tr>
+              </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -61,6 +84,8 @@ export default {
   },
   data() {
     return {
+      url: "http://localhost:5000/tasks",
+      tasks: [],
       openTab: 2,
     };
   },
@@ -68,6 +93,21 @@ export default {
     toggleTabs: function(tabNumber) {
       this.openTab = tabNumber;
     },
+
+    async getTasks() {
+      try {
+        const res = await fetch(this.url);
+        const data = await res.json();
+        return data;
+      } catch (error) {
+        console.log(`Could not get! ${error}`);
+      }
+    },
+  },
+
+  async created() {
+    this.tasks = await this.getTasks();
   },
 };
 </script>
+
