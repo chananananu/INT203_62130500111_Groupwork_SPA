@@ -10,7 +10,6 @@ module.exports = {
         grs: '#8E8E8E',
         gr: '#9CA3AF',
         pkd: '#FFBBBB',
-        pkdd: '#D7A0A0'
       }
     },
   },

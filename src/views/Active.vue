@@ -1,7 +1,7 @@
 <template>
   <div class="active">
     <h1 class="text-4xl">TO DO LIST</h1>
-    <p class="font-light">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+    <p class="font-light text-xl">Start managing your tasks to-do lists today!</p>
     <add-task/>
     <div class="flex justify-center gap-3">
       <router-link to="/">
