@@ -11,7 +11,6 @@
         <base-button
           buttonLabel="All Task"
           buttonColor="bg-pk"
-          v-on:click="toggleTabs(1)"
         ></base-button>
       </router-link>
       <router-link to="/active">
@@ -19,21 +18,19 @@
           buttonLabel="Active Task"
           buttonColor="bg-yl"
           class="inline-block"
-          v-on:click="toggleTabs(2)"
         ></base-button>
       </router-link>
       <router-link to="/complete">
         <base-button
           buttonLabel="Complete Task"
           buttonColor="bg-bl"
-          v-on:click="toggleTabs(3)"
+          v-on:click="tasks = completeList"
         ></base-button>
       </router-link>
       <add-task v-if="showModal" @save-task="addNewTask" @close="toggleModal"></add-task>
       <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
     </div>
       <div class="px-60 py-5 flex-auto ">
-        <div v-bind:class="{ hidden: openTab !== 1, block: openTab === 1 }">
           <div class="space-y-3">
 
             <div v-for="(task,index) in tasks" :key="task.id">       
@@ -59,7 +56,7 @@
                     </td>
                     <td class="pt-2 text-right">
                       <button class="px-2" >
-                        <span class="material-icons" @click="showData(task)">
+                        <span class="material-icons">
                           edit
                         </span>
                       </button>
@@ -76,7 +73,7 @@
           </div>
         </div>
       </div>
-  </div>
+      
 </template>
 
 <script>
@@ -91,7 +88,6 @@ export default {
     return {
       url: "http://localhost:5000/tasks",
       tasks: [],
-      openTab: 1,
       done: false,
       showModal: false,
       // isEdit: false,
@@ -103,20 +99,20 @@ export default {
       this.showModal = !this.showModal;
     },
 
-    toggleTabs: function(tabNumber) {
-      this.openTab = tabNumber;
-    },
+    // toggleTabs: function(tabNumber) {
+    //   this.openTab = tabNumber;
+    // },
 
     toggleDone(index){
       this.tasks[index].done = !this.tasks[index].done
     },
 
-    showData(oldData) {
-      this.isEdit = true
-      this.editId = oldData.id
-      this.enteredName = oldData.name
-      this.detail = oldData.detail
-    },
+    // showData(oldData) {
+    //   this.isEdit = true
+    //   this.editId = oldData.id
+    //   this.enteredName = oldData.name
+    //   this.detail = oldData.detail
+    // },
 
     
     async addNewTask(newTask) {
@@ -140,33 +136,6 @@ export default {
       this.detail = null
     },
 
-    // async editTask(editingTask) {
-    //   try {
-    //     const res = await fetch(`${this.url}/${editingTask.id}`, {
-    //       method: 'PUT',
-    //       headers: {
-    //         'content-type': 'application/json'
-    //       },
-    //       body: JSON.stringify({
-    //         name: editingTask.name,
-    //         detail: editingTask.detail
-    //       })
-    //     })
-    //     const data = await res.json()
-    //     this.tasks = this.tasks.map((task) =>
-    //       task.id === editingTask.id
-    //         ? { ...task, name: data.name, detail: data.detail }
-    //         : task
-    //     )
-    //     this.isEdit = false
-    //     this.editId = ''
-    //     this.enteredName = ''
-    //     this.detail = null
-    //   } catch (error) {
-    //     console.log(`Could not edit! ${error}`)
-    //   }
-    // },
-    
 
     async getTasks() {
       try {

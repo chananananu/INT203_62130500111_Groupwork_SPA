@@ -2,21 +2,18 @@
   "tasks": [
     {
       "name": "task 1",
-      "detail": "detail detail detail detail",
+      "detail": "detail",
       "id": 1
     },
     {
       "name": "task 2",
-      "detail": "detail detail detail detail detail detail detail",
+      "detail": null,
       "id": 2
     },
     {
-      "name": "task no detail",
+      "name": "",
+      "detail": null,
       "id": 3
-    },
-    {
-      "name": "cat",
-      "id": 5
     }
   ]
 }

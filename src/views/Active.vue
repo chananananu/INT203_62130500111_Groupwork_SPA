@@ -11,7 +11,7 @@
         <base-button
           buttonLabel="All Task"
           buttonColor="bg-pk"
-          v-on:click="toggleTabs(1)"
+
         ></base-button>
       </router-link>
       <router-link to="/active">
@@ -19,21 +19,20 @@
           buttonLabel="Active Task"
           buttonColor="bg-yl"
           class="inline-block"
-          v-on:click="toggleTabs(2)"
+
         ></base-button>
       </router-link>
       <router-link to="/complete">
         <base-button
           buttonLabel="Complete Task"
           buttonColor="bg-bl"
-          v-on:click="toggleTabs(3)"
+
         ></base-button>
       </router-link>
       <add-task v-if="showModal" @save-task="addNewTask" @close="toggleModal"></add-task>
       <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
     </div>
       <div class="px-60 py-5 flex-auto ">
-        <div v-bind:class="{ hidden: openTab !== 2, block: openTab === 2 }">
           <div class="space-y-3">
 
             <div v-for="(task,index) in tasks" :key="task.id">       
@@ -76,13 +75,11 @@
           </div>
         </div>
       </div>
-  </div>
 </template>
 
 <script>
 import AddTask from "../components/AddTask.vue";
 // @ is an alias to /src
-
 export default {
   components: {
     AddTask,
@@ -91,7 +88,7 @@ export default {
     return {
       url: "http://localhost:5000/tasks",
       tasks: [],
-      openTab: 2,
+
       done: false,
       showModal: false,
       // isEdit: false,
@@ -102,22 +99,18 @@ export default {
     toggleModal: function() {
       this.showModal = !this.showModal;
     },
-
-    toggleTabs: function(tabNumber) {
-      this.openTab = tabNumber;
-    },
-
+    // toggleTabs: function(tabNumber) {
+    //   this.openTab = tabNumber;
+    // },
     toggleDone(index){
       this.tasks[index].done = !this.tasks[index].done
     },
-
-    showData(oldData) {
-      this.isEdit = true
-      this.editId = oldData.id
-      this.enteredName = oldData.name
-      this.detail = oldData.detail
-    },
-
+    // showData(oldData) {
+    //   this.isEdit = true
+    //   this.editId = oldData.id
+    //   this.enteredName = oldData.name
+    //   this.detail = oldData.detail
+    // },
     
     async addNewTask(newTask) {
       try {
@@ -139,7 +132,6 @@ export default {
       this.enteredName = ''
       this.detail = null
     },
-
     async getTasks() {
       try {
         const res = await fetch(this.url);
@@ -162,7 +154,6 @@ export default {
       }
     }
   },
-
   async created() {
     this.tasks = await this.getTasks();
   },
