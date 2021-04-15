@@ -1,84 +1,54 @@
 <template>
-  <div class="active">
+  <div class="home">
     <h1 class="text-4xl">TO DO LIST</h1>
-    <p class="font-light text-xl">
-      Start managing your to-do lists today!
-    </p>
-    <!-- <add-task /> -->
+    <p class="font-light text-xl">Start managing your to-do lists today!</p>
     <button @click="toggleModal" class="btn">Add Task</button>
     <div class="flex justify-center gap-3">
       <router-link to="/">
-        <base-button
-          buttonLabel="Task"
-          buttonColor="bg-pk"
-        ></base-button>
+        <base-button buttonLabel="Task" buttonColor="bg-pk"></base-button>
       </router-link>
       <router-link to="/memo">
-        <base-button
-          buttonLabel="Memo"
-          buttonColor="bg-yl"
-          class="inline-block"
-        ></base-button>
+        <base-button buttonLabel="Memo" buttonColor="bg-yl"></base-button>
       </router-link>
       <router-link to="/checklist">
-        <base-button
-          buttonLabel="Checklist"
-          buttonColor="bg-bl"
-        ></base-button>
+        <base-button buttonLabel="Checklist" buttonColor="bg-bl"></base-button>
       </router-link>
       <add-task v-if="showModal" @save-task="addNewTask" @close="toggleModal"></add-task>
-      <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
-      <!-- <add-memo v-if="showMemoModal" @save-task="addNewMemo" @close="toggleMemoModal"></add-memo>
-      <div v-if="showMemoModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div> -->
-
+      <div v-if="showModal" class="show-modal"></div>
     </div>
       <div class="px-60 py-5 flex-auto ">
           <div class="space-y-3">
-
             <div v-for="(task,index) in tasks" :key="task.id">       
-
-              <div class="w-full rounded-md px-4 py-3 border border-grs">
-              <table class='w-full'>
-                <tr>
+              <div class="task-card">
+                <table class='w-full'>
+                  <tr>
                     <td class="">
-                        <div class="flex justify-start">
-                          <input type="checkbox" class="form-checkbox h-5 w-5 mt-1" v-on:click="toggleDone(index)">
+                      <div class="flex justify-start">
+                        <input type="checkbox" class="form-checkbox h-5 w-5 mt-1" v-on:click="toggleDone(index)">
                           <div :class="[task.done ? 'text-gr line-through':'']">
-                          <h3 class="ml-3 text-lg tracking-wide">
-                            {{ task.name }}
-                          </h3>
+                            <h3 class="ml-3 text-lg tracking-wide">{{ task.name }}</h3>
                           </div>
-                        </div>
-
-                        <div class="flex justify-start">
-                          <p class="ml-8 mr- text-grs font-light break-all text-left">
-                            {{ task.detail }}
-                          </p>
-                        </div>
+                      </div>
+                      <div class="flex justify-start">
+                        <p class="task-detail">{{ task.detail }}</p>
+                      </div>
                     </td>
                     <td class="pt-2 text-right ">
-                      <button class="px-2 fixed" >
-                        <span class="material-icons">
-                          edit
-                        </span>
-                      </button>
-                      <button class="pl-9" @click="deleteTask(task.id)">
-                        <span class="material-icons">
-                          delete
-                        </span>
+                      <button class="" @click="deleteTask(task.id)">
+                        <span class="material-icons">delete</span>
                       </button>
                     </td>
-                </tr>
-              </table>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      
+  </div>   
 </template>
 
 <script>
+
 import AddTask from "../components/AddTask.vue";
 
 // @ is an alias to /src
@@ -91,39 +61,20 @@ export default {
     return {
       url: "http://localhost:5000/tasks",
       tasks: [],
-      // myMemo: [],
       done: false,
       showModal: false,
-      // showMemoModal: false
-      // isEdit: false,
-      // editId: '',
     };
   },
+
   methods: {
     toggleModal: function() {
       this.showModal = !this.showModal;
     },
 
-    // toggleMemoModal: function() {
-    //   this.showMemoModal = !this.showMemoModal;
-    // },
-
-    // toggleTabs: function(tabNumber) {
-    //   this.openTab = tabNumber;
-    // },
-
     toggleDone(index){
       this.tasks[index].done = !this.tasks[index].done
     },
-
-    // showData(oldData) {
-    //   this.isEdit = true
-    //   this.editId = oldData.id
-    //   this.enteredName = oldData.name
-    //   this.detail = oldData.detail
-    // },
-
-    
+   
     async addNewTask(newTask) {
       try {
         const res = await fetch(this.url, {
@@ -145,7 +96,6 @@ export default {
       this.detail = null
     },
 
-
     async getTasks() {
       try {
         const res = await fetch(this.url);
@@ -155,6 +105,7 @@ export default {
         console.log(`Could not get! ${error}`);
       }
     },
+
     async deleteTask(deleteId) {
       try {
         await fetch(`${this.url}/${deleteId}`, {
@@ -171,6 +122,6 @@ export default {
 
   async created() {
     this.tasks = await this.getTasks();
-  },
+  }
 };
 </script>
