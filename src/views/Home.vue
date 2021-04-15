@@ -2,40 +2,42 @@
   <div class="active">
     <h1 class="text-4xl">TO DO LIST</h1>
     <p class="font-light text-xl">
-      Start managing your tasks to-do lists today!
+      Start managing your to-do lists today!
     </p>
     <!-- <add-task /> -->
     <button @click="toggleModal" class="btn">Add Task</button>
     <div class="flex justify-center gap-3">
       <router-link to="/">
         <base-button
-          buttonLabel="All Task"
+          buttonLabel="Task"
           buttonColor="bg-pk"
         ></base-button>
       </router-link>
-      <router-link to="/active">
+      <router-link to="/memo">
         <base-button
-          buttonLabel="Active Task"
+          buttonLabel="Memo"
           buttonColor="bg-yl"
           class="inline-block"
         ></base-button>
       </router-link>
-      <router-link to="/complete">
+      <router-link to="/checklist">
         <base-button
-          buttonLabel="Complete Task"
+          buttonLabel="Checklist"
           buttonColor="bg-bl"
-          v-on:click="tasks = completeList"
         ></base-button>
       </router-link>
       <add-task v-if="showModal" @save-task="addNewTask" @close="toggleModal"></add-task>
       <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+      <!-- <add-memo v-if="showMemoModal" @save-task="addNewMemo" @close="toggleMemoModal"></add-memo>
+      <div v-if="showMemoModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div> -->
+
     </div>
       <div class="px-60 py-5 flex-auto ">
           <div class="space-y-3">
 
             <div v-for="(task,index) in tasks" :key="task.id">       
 
-              <div class="w-full rounded-md px-4 py-3 border border-grs outline-none focus:outline-none">
+              <div class="w-full rounded-md px-4 py-3 border border-grs">
               <table class='w-full'>
                 <tr>
                     <td class="">
@@ -49,18 +51,18 @@
                         </div>
 
                         <div class="flex justify-start">
-                          <p class="ml-8 text-grs font-light">
+                          <p class="ml-8 mr- text-grs font-light break-all text-left">
                             {{ task.detail }}
                           </p>
                         </div>
                     </td>
-                    <td class="pt-2 text-right">
-                      <button class="px-2" >
+                    <td class="pt-2 text-right ">
+                      <button class="px-2 fixed" >
                         <span class="material-icons">
                           edit
                         </span>
                       </button>
-                      <button class="px-2" @click="deleteTask(task.id)">
+                      <button class="pl-9" @click="deleteTask(task.id)">
                         <span class="material-icons">
                           delete
                         </span>
@@ -78,18 +80,21 @@
 
 <script>
 import AddTask from "../components/AddTask.vue";
+
 // @ is an alias to /src
 
 export default {
   components: {
-    AddTask,
+    AddTask
   },
   data() {
     return {
       url: "http://localhost:5000/tasks",
       tasks: [],
+      // myMemo: [],
       done: false,
       showModal: false,
+      // showMemoModal: false
       // isEdit: false,
       // editId: '',
     };
@@ -98,6 +103,10 @@ export default {
     toggleModal: function() {
       this.showModal = !this.showModal;
     },
+
+    // toggleMemoModal: function() {
+    //   this.showMemoModal = !this.showMemoModal;
+    // },
 
     // toggleTabs: function(tabNumber) {
     //   this.openTab = tabNumber;

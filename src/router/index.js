@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Active from '../views/Active.vue'
-import Complete from '../views/Complete.vue'
+import Memo from '../views/Memo.vue'
+import Checklist from '../views/Checklist.vue'
 
 const routes = [
   {
@@ -18,14 +18,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/active',
-    name: 'Active',
-    component: Active
+    path: '/memo',
+    name: 'Memo',
+    component: Memo
   },
   {
-    path: '/complete',
-    name: 'Complete',
-    component: Complete
+    path: '/checklist',
+    name: 'Checklist',
+    component: Checklist
   },
 ]
 

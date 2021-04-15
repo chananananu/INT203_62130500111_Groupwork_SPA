@@ -15,10 +15,10 @@
           </div>
 
           <div class="pt-3 px-64">
-            <h3 class="text-3xl">Add Task</h3>
+            <h3 class="text-3xl">Add Memo</h3>
           </div>
-          <form @submit.prevent="addTask" class="px-8 pt-6 pb-8 mb-2 bg-white rounded" >
-            <div class="mb-3">
+          <form @submit.prevent="addMemo" class="px-8 pt-6 pb-8 mb-2 bg-white rounded" >
+            <!-- <div class="mb-3">
               <label class="label">
                 Task Name
               </label>
@@ -26,27 +26,25 @@
                 type="text" id="name" name="name" placeholder="Enter Your Task Name ..."
                 class="w-full px-3 py-2 mb-3 bg-gray-100 rounded" v-model.trim="enteredName" @blur="validateName"
               />
-              <p v-if="invalidNameInput" class="text-red-500 font-light flex justify-start">
-                "Please enter task name"</p>
-            </div>
-
+              
+            </div> -->
             <div class="mb-3">
-              <label class="label">
-                Detail
-              </label>
               <textarea
                 rows="4"
                 cols="50"
                 type="text"
-                id="detail"
-                name="detail"
-                v-model.trim="detail"
-                placeholder="Task Detail ..."
+                id="memo"
+                name="memo"
+                placeholder="Enter memo ..."
+                v-model.trim="enteredMemo"
+                 
                 class="w-full px-3 py-2 h-48 mb-3 bg-gray-100 rounded"
               />
+              <!-- <p v-if="invalidMemoInput" class="text-red-500 font-light flex justify-start">
+                "Please enter something"</p> -->
             </div>
             <div class="flex flex-col col-span-2">
-              <input type="submit" value="Add Task" class="submit" />
+              <input type="submit" value="Add Memo" class="submit" />
             </div>
           </form>
         </div>
@@ -59,16 +57,16 @@
 
 <script>
 export default {
-  name: "add-task",
-  emits: ["close","save-task"],
+  name: "add-memo",
+  emits: ["close","save-memo"],
   data() {
+    
     return {
       // showModal: false,
-      enteredName: '',
-      detail: null,
-      invalidNameInput: false,
-      url: "http://localhost:5000/tasks",
-      tasks: [],
+      enteredMemo: '',
+      invalidMemoInput: false,
+      url: "http://localhost:5000/myMemo",
+      myMemo: [],
     };
   },
   methods: {
@@ -78,34 +76,32 @@ export default {
     closeModal() {
       this.$emit("close", true);
     },
-    addTask() {
-      this.invalidNameInput = this.enteredName === '' ? true : false;
-      console.log(`name value: ${this.enteredName}`)
-      console.log(`invalid name: ${this.invalidNameInput}`)
+    addMemo() {
+      this.invalidMemoInput = this.enteredMemo === '' ? true : false;
+      console.log(`memo value: ${this.enteredMemo}`)
+      console.log(`invalid memo: ${this.invalidMemoInput}`)
       
-      // if (this.enteredName !== '') {
-      //   this.addNewTask({
-      //     name: this.enteredName,
-      //     detail: this.detail,
+      // if (this.enteredMemo !== '') {
+      //   this.addNewMemo({
+      //     name: this.enteredMemo,
       //   });
-        
-      this.saveTask();
+
+      this.saveMemo();
       this.closeModal();
+    
       
-      //}
     },
-    saveTask() {
-      let tasks = {
-        name: this.enteredName,
-        detail: this.detail,
+    saveMemo() {
+      let myMemo = {
+        name: this.enteredMemo,
       };
-      this.$emit("save-task", tasks);
+      this.$emit("save-memo", myMemo);
     },
       
-    validateName() {
-      this.invalidNameInput = this.enteredName === '' ? true : false;
-      console.log(`name: ${this.invalidNameInput}`);
-    },
+    // validateName() {
+    //   this.invalidMemoInput = this.enteredMemo === '' ? true : false;
+    //   console.log(`memo: ${this.invalidMemoInput}`);
+    // },
   },
 };
 </script>
